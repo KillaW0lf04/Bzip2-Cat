@@ -6,4 +6,5 @@ A utility similiar to the UNIX command "cat" that is able to display the content
 Simply build by running `make`
 
 View a compressed text file:
-	bcat sometextfile.txt
+
+    bcat sometextfile.txt
