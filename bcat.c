@@ -32,11 +32,12 @@ int main (int argc, char *argv[])
         int n;
 
         while ((n = BZ2_bzRead(&bzError, bzFile, buffer, BUFLEN)) > 0) {
-            write(1, buffer, n);
+            write(1, buffer, n);  // Write to stdout
         }
     }
     else {
         printf("Usage: bcat <bz2file>\n");
+        printf("Displays the contents of a text file compressed under the bz2 compression algorithm.\n");
     }
 }
 
