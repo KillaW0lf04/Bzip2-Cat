@@ -1,0 +1,38 @@
+#include <stdlib.h>
+#include <unistd.h>
+#include <bzlib.h>
+
+#define BUFLEN 4096
+
+int main( int argc, char *argv[])
+{
+    if (argc > 1) {
+        int bzError;
+        char buffer[BUFLEN];
+        char *path = argv[1];
+
+        FILE *file = fopen(path, "r");
+
+        if (!file) {
+            printf("Error openning %s\n", path);
+            exit(1);
+        }
+
+        BZFILE *bzFile = BZ2_bzReadOpen(&bzError, file, 0, 0, NULL, 0);
+
+        if (bzError != BZ_OK) {
+            printf("Error openning bz file %s\n", path);
+            exit(1);
+        }
+
+        int n;
+
+        while ((n = BZ2_bzRead(&bzError, bzFile, buffer, BUFLEN)) > 0) {
+            write(1, buffer, n);
+        }
+    }
+    else {
+        printf("Usage: bcat <bz2file>\n");
+    }
+}
+
