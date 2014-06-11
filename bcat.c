@@ -34,6 +34,9 @@ int main (int argc, char *argv[])
         while ((n = BZ2_bzRead(&bzError, bzFile, buffer, BUFLEN)) > 0) {
             write(1, buffer, n);  // Write to stdout
         }
+
+        // End output gracefully
+        write(1, "\n", 1);
     }
     else {
         printf("Usage: bcat <bz2file>\n");
