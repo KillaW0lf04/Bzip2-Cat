@@ -1,6 +1,8 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <bzlib.h>
+#include <errno.h>
+#include <string.h>
 
 #define BUFLEN 4096
 
@@ -15,13 +17,15 @@ int main( int argc, char *argv[])
 
         if (!file) {
             printf("Error openning %s\n", path);
+            printf("%s\n", strerror(errno));
             exit(1);
         }
 
         BZFILE *bzFile = BZ2_bzReadOpen(&bzError, file, 0, 0, NULL, 0);
 
         if (bzError != BZ_OK) {
-            printf("Error openning bz file %s\n", path);
+            printf("Error openning Bz2 file %s\n", path);
+            printf("%s\n", strerror(errno));
             exit(1);
         }
 
