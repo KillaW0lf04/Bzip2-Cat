@@ -1,0 +1,6 @@
+# Qt Creator
+*.user
+
+# Binaries
+*.out
+bcat
