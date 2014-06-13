@@ -19,4 +19,6 @@ Simply build by running the `make` command
 
 You can then view a compressed text file as follows:
 
-    bcat sometextfile.txt.bz2
+    ./bcat sometextfile.txt.bz2
+
+Move the `bcat` executable to a location in your path (like /usr/local/bin) to run it anywhere
