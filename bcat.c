@@ -26,7 +26,6 @@ int main (int argc, char *argv[])
 {
     if (argc > 1) {
 
-
         char buffer[BUFLEN];
         char extension[10];
         char *path = argv[1];
@@ -44,11 +43,11 @@ int main (int argc, char *argv[])
              if (!gFile) {
                 printf("Error openning %s\n", path);
                 printf("%s\n", strerror(errno));
-                exit(1);
+                return 1;
              }
 
              while( (n = gzread(gFile, buffer, BUFLEN)) > 0) {
-                 write(1, buffer,n );
+                 write(1, buffer,n );  // write to stdout
              }
         }
         else if (isBz2) {
@@ -59,7 +58,7 @@ int main (int argc, char *argv[])
             if (!file) {
                 printf("Error openning %s\n", path);
                 printf("%s\n", strerror(errno));
-                exit(1);
+                return 1;
             }
 
             BZFILE *bzFile = BZ2_bzReadOpen(&bzError, file, 0, 0, NULL, 0);
@@ -67,7 +66,7 @@ int main (int argc, char *argv[])
             if (bzError != BZ_OK) {
                 printf("Error openning Bz2 file %s\n", path);
                 printf("%s\n", strerror(errno));
-                exit(1);
+                return 1;
             }
 
             while ((n = BZ2_bzRead(&bzError, bzFile, buffer, BUFLEN)) > 0) {
@@ -79,10 +78,12 @@ int main (int argc, char *argv[])
 
         // End output gracefully
         write(1, "\n", 1);
+        return 0;
     }
     else {
         printf("Usage: bcat <cfile>\n");
         printf("Displays the contents of a file compressed using bz2 or gzip.\n");
+        return 0;
     }
 }
 
