@@ -7,17 +7,39 @@
 
 #define BUFLEN 4096
 
+void get_extension(char *path, char *result) {
+    int i = 0;
+    int rindex = -1;
+    char c;
+
+    while( (c = path[i++]) != '\0') {
+        if (c == '.') {
+            rindex = 0;
+        } else if (rindex != -1) {
+            result[rindex++] = c;
+        }
+    }
+    result[rindex] = '\0';
+}
+
 int main (int argc, char *argv[])
 {
     if (argc > 1) {
 
-        char isGzip = 1;  // Temp flag to set mode
+
         char buffer[BUFLEN];
+        char extension[10];
         char *path = argv[1];
         int n;
 
+        get_extension(path, extension);
+
+        // Determine compression type based on file extension
+        char isGzip = strcmp(extension, "gz") == 0;
+        char isBz2 = strcmp(extension, "bz2") == 0;
+
         if (isGzip) {
-             gzFile *gFile = gzopen(path, "rb");
+             gzFile gFile = gzopen(path, "rb");
 
              if (!gFile) {
                 printf("Error openning %s\n", path);
@@ -29,7 +51,7 @@ int main (int argc, char *argv[])
                  write(1, buffer,n );
              }
         }
-        else {
+        else if (isBz2) {
             int bzError;
 
             FILE *file = fopen(path, "r");
@@ -51,6 +73,8 @@ int main (int argc, char *argv[])
             while ((n = BZ2_bzRead(&bzError, bzFile, buffer, BUFLEN)) > 0) {
                 write(1, buffer, n);  // Write to stdout
             }
+        } else {
+            printf("ERROR: Not a compressed file!");
         }
 
         // End output gracefully
