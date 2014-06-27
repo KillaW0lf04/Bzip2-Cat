@@ -81,8 +81,8 @@ int main (int argc, char *argv[])
         write(1, "\n", 1);
     }
     else {
-        printf("Usage: bcat <bz2file>\n");
-        printf("Displays the contents of a text file compressed under the bz2 compression algorithm.\n");
+        printf("Usage: bcat <cfile>\n");
+        printf("Displays the contents of a file compressed using bz2 or gzip.\n");
     }
 }
 
