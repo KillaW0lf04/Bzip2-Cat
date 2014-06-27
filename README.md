@@ -1,7 +1,7 @@
 Bzip2 Cat
 =========
 
-A utility similiar to the UNIX command "cat" that is able to display the content of text files compressed using the bz2 compression algorithm.
+A utility similiar to the UNIX command "cat" that is able to display the content of text files compressed using either the bz2 or gzip compression algorithm.
 
 Requirements
 ------------
@@ -11,6 +11,7 @@ The following need to be installed on a Ubuntu machine:
 * gcc
 * libbz2
 * libbz2-dev
+* zlib1g-dev
 
 Building
 --------
